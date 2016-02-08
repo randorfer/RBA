@@ -19,7 +19,7 @@ $Credential = Get-AutomationPSCredential -Name $Vars.DomainCredentialName
 
 Try
 {
-	Write-Verbose "Hello Dev $($vars.DomainCredentialName)"
+	Write-Verbose "Hello  $($vars.DomainCredentialName)"
 	Write-Verbose "Goodbye $($credential.UserName)"
 }
 Catch
