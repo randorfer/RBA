@@ -19,6 +19,7 @@ $Credential = Get-AutomationPSCredential -Name $Vars.DomainCredentialName
 
 Try
 {
+    Write-Verbose -Message "hi mom!"
 
 }
 Catch
