@@ -24,7 +24,7 @@ Configuration SQLStandalone
             Type = 'Directory'
             Recurse = $true
             SourcePath = '\\usfile01\itdbsrvs-mssql-binaries\SQL2014\Enterprise_x86'
-            DestinationPath = "$($SourceDirectory)\$($Version)\source"
+            DestinationPath = "$($SourceDirectory)\$($Version)"
             Force = $true
             Credential = $FileshareAccessCred
             Dependson = '[File]Sources_Directory'
@@ -41,7 +41,8 @@ Configuration SQLStandalone
         xSqlServerSetup SQL_2014_Ent_32bit_engine
         {
             DependsOn = @('[WindowsFeature]NET-Framework-Core', '[File]Sql_Binaries')
-            SourcePath = "$($SourceDirectory)\$($Version)"
+            SourcePath = $SourceDirectory
+            SourceFolder = $Version
             SetupCredential = $SQLSetupCred
             Features = 'SQLEngine,SSMS'
             SQLSysAdminAccounts = 'USAC\IT DBS MS SQL Admin'
