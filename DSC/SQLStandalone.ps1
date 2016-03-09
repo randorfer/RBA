@@ -40,7 +40,7 @@ Configuration SQLStandalone
         #SQL Setup
         xSqlServerSetup SQL_2014_Ent_32bit_engine
         {
-            DependsOn = @('[WindowsFeature]NET-Framework-Core', '[file]Sql_Binaries')
+            DependsOn = @('[WindowsFeature]NET-Framework-Core', '[File]Sql_Binaries')
             SourcePath = "$($SourceDirectory)\$($Version)"
             SetupCredential = $SQLSetupCred
             Features = 'SQLEngine,SSMS'
@@ -53,6 +53,7 @@ Configuration SQLStandalone
             SQLTempDBDir = 'K:\MSSQL\DATA'
             SQLTempDBLogDir = 'L:\MSSQL\DATA'
             SQLBackupDir = 'J:\MSSQL\BACKUP'
+            InstanceName = 'MSSQLSERVER'
         }
     }
 }
