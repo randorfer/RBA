@@ -24,7 +24,7 @@ Configuration SQLStandalone
             Type = 'Directory'
             Recurse = $true
             SourcePath = '\\usfile01\itdbsrvs-mssql-binaries\SQL2014\Enterprise_x86'
-            DestinationPath = "$($SourceDirectory)\$($Version)"
+            DestinationPath = "$($SourceDirectory)\$($Version)\source"
             Force = $true
             Credential = $FileshareAccessCred
             Dependson = '[File]Sources_Directory'
