@@ -14,7 +14,7 @@ Configuration SQLStandalone
         {
             Ensure = 'Present'
             Type = 'Directory'
-            DestinationPath = "$($SourceDirectory)\$($Version)"
+            DestinationPath = "$($SourceDirectory)"
             Force = $true
         }
 
