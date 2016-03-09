@@ -1,7 +1,7 @@
 #requires -Version 4
 Configuration SQLStandalone
 {
-    Import-DscResource -Module xSQLServer
+    Import-DscResource -Module xSQLServer, psdesiredstateconfiguration
 
     $SourceDirectory = 'c:\temp\sqlsource'
     $FileshareAccessCred = Get-AutomationPSCredential -Name 'usfprbaprd@usac.mmm.com'
