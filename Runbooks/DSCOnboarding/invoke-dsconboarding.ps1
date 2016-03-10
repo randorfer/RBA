@@ -1,27 +1,38 @@
 ﻿<#
-        .SYNOPSIS
-        Add a synopsis here to explain the PSScript. 
-
-        .Description
-        Give a description of the Script.
-
+    .SYNOPSIS
+        Onboards a target computer to Azure Automation and joins it
+        to the target configuration name    
 #>
 Param(
-    $computername
+    [Parameter(
+        Mandatory = $True,
+        Position = 0
+    )]
+    [string]
+    $ComputerName,
+    
+    [Parameter(
+        Mandatory = $True,
+        Position = 1
+    )]
+    [string]
+    $ConfigurationName
 )
 $ErrorActionPreference = [System.Management.Automation.ActionPreference]::Stop
-$CompletedParameters = Write-StartingMessage -CommandName invoke-dsconboarding
+$CompletedParameters = Write-StartingMessage -CommandName Invoke-DSCOnboarding
 
-$Vars = Get-BatchAutomationVariable -Name  'DomainCredentialName' `
--Prefix 'Global'
+$Vars = Get-BatchAutomationVariable -Name  'DomainCredentialName',
+                                           'AutomationAccountPrimaryKeyCredName',
+                                           'AutomationAccountURL' `
+                                    -Prefix 'Global'
 
 $Credential = Get-AutomationPSCredential -Name $Vars.DomainCredentialName
-
+$AutomationAccountCred = Get-AutomationPSCredential -Name $Vars.AutomationAccountPrimaryKeyCredName
 Try
 {
-    $tempdir = New-TempDirectory 
-    $CurrentLocation = get-location
-    Set-Location -Path $tempdir
+    $TempDirectory = New-TempDirectory 
+    $CurrentLocation = Get-Location
+    Set-Location -Path $TempDirectory
 
     # The DSC configuration that will generate metaconfigurations
     Set-StrictMode -Off
@@ -74,7 +85,7 @@ Try
             $RefreshMode = 'PULL'
         }
 
-        Node $computername
+        Node $ComputerName
         {
             Settings 
             { 
@@ -114,10 +125,10 @@ Try
     # Create the metaconfigurations
     # TODO: edit the below as needed for your use case
     $Params = @{
-        RegistrationUrl                = 'https://eus2-agentservice-prod-1.azure-automation.net/accounts/3dfbd6d5-ad05-4d97-9fff-e91292260f82'
-        RegistrationKey                = 'tUcYBGetsVTlRW0f3J5rM8BAHKE6R1fAr8Wrt0BnpGKwizTmfS0hJaJlaA+5fqnxReeEgdGyYvgo6Gj24bKMEA=='
-        ComputerName                   = $computername
-        NodeConfigurationName          = 'sqlstandalone.SQL_2014_Ent_32bit_engine'
+        RegistrationUrl                = $Vars.AutomationAccountURL
+        RegistrationKey                = $AutomationAccountCred.GetNetworkCredential().Password
+        ComputerName                   = $ComputerName
+        NodeConfigurationName          = $ConfigurationName
         RefreshFrequencyMins           = 30
         ConfigurationModeFrequencyMins = 15
         RebootNodeIfNeeded             = $True
@@ -155,3 +166,4 @@ Finally
 
 
 Write-CompletedMessage @CompletedParameters
+

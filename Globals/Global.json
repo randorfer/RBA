@@ -1,5 +1,15 @@
 ﻿{
     "Variables":  {
+                      "Global-AutomationAccountURL":  {
+                                                          "isEncrypted":  false,
+                                                          "Description":  "",
+                                                          "Value":  "https://eus2-agentservice-prod-1.azure-automation.net/accounts/3dfbd6d5-ad05-4d97-9fff-e91292260f82"
+                                                      },
+                      "Global-AutomationAccountPrimaryKeyCredName":  {
+                                                                  "isEncrypted":  false,
+                                                                  "Description":  "",
+                                                                  "Value":  "SCOrchDev-Staging-PrimaryKey"
+                                                              },
                       "Global-DomainCredentialName":  {
                                                           "isEncrypted":  false,
                                                           "Description":  "",
